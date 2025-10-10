@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Users Report{% endblock %}
+
+{% block content %}
+<h1>Users Report</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Пользователь</th>
+            <th>Количество посещений</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user_id, first_name, last_name, middle_name, count in stats %}
+        {% if count > 0 %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ ' '.join([last_name, first_name, middle_name] | select) }}</td>
+            <td>{{ count }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        
+        {% if anonymous_count > 0 %}
+        <tr>
+            <td>{{ stats | length + 1 }}</td>
+            <td>Unauthenticated user</td>
+            <td>{{ anonymous_count }}</td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<div class="mt-3">
+    <a href="{{ url_for('reports.export_users_csv') }}" class="btn btn-success">Экспорт в CSV</a>
+    <a href="{{ url_for('reports.visit_logs') }}" class="btn btn-info">Visit Logs</a>
+    <a href="{{ url_for('reports.pages_report') }}" class="btn btn-info">Pages Report</a>
+    <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Back to Home</a>
+</div>
+{% endblock %} 
