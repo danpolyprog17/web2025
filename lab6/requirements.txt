@@ -19,3 +19,4 @@ typing-extensions==4.11.0
 werkzeug==3.0.3
 zipp==3.18.1
 pytest==7.4.0
+gunicorn==21.2.0
